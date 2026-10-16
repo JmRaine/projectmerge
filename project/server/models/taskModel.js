@@ -5,7 +5,12 @@ const taskSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Auth', index: true },
   title: { type: String, required: true, trim: true },
   description: { type: String, default: '' },
-  project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
+  project: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project',
+    required() { return this.scope !== 'personal'; },
+  },
+  team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
   assignee: { type: mongoose.Schema.Types.ObjectId, ref: 'Auth' },
   collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Auth' }],
   watchers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Auth' }],

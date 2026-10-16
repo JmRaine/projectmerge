@@ -16,7 +16,7 @@ test('getAppConfig normalizes configured production URLs', () => {
     VITE_SERVER_BASE_URL: 'https://realtime.taskedge.example/',
   }), {
     apiBaseUrl: 'https://api.taskedge.example/api',
-    serverBaseUrl: 'https://realtime.taskedge.example',
+    serverBaseUrl: 'https://api.taskedge.example',
   })
 })
 

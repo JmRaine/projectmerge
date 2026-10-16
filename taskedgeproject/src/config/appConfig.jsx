@@ -6,8 +6,7 @@ function normalizeUrl(value) {
 
 export function getAppConfig(env = {}) {
   const apiBaseUrl = normalizeUrl(env.VITE_API_BASE_URL) || DEFAULT_API_BASE_URL
-  const serverBaseUrl = normalizeUrl(env.VITE_SERVER_BASE_URL)
-    || apiBaseUrl.replace(/\/api$/, '')
+  const serverBaseUrl = apiBaseUrl.replace(/\/api$/, '')
 
   return { apiBaseUrl, serverBaseUrl }
 }

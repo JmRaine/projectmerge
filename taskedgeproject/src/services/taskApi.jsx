@@ -227,7 +227,7 @@ export function createTaskApi({
       const [projectData, taskData, activityData, teamData, userData] = await Promise.all([
         request('/projects?archived=true'),
         request('/tasks?archived=true'),
-        request('/activities?archived=true'),
+        request('/tasks?type=individual-activity&archived=true'),
         request('/teams?archived=true'),
         includeUsers ? request('/users?archived=true') : Promise.resolve({ items: [] }),
       ])

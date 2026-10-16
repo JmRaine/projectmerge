@@ -487,7 +487,7 @@ test('createTaskApi lists and restores archived records', async () => {
         }
       }
 
-      if (url.endsWith('/activities?archived=true')) {
+      if (url.endsWith('/tasks?type=individual-activity&archived=true')) {
         return {
           ok: true,
           json: async () => ({
@@ -623,7 +623,7 @@ test('createTaskApi lists and restores archived records', async () => {
   assert.equal(restoredUser._id, 'user-1')
   assert.equal(calls[0].url, 'http://localhost:8000/api/projects?archived=true')
   assert.equal(calls[1].url, 'http://localhost:8000/api/tasks?archived=true')
-  assert.equal(calls[2].url, 'http://localhost:8000/api/activities?archived=true')
+  assert.equal(calls[2].url, 'http://localhost:8000/api/tasks?type=individual-activity&archived=true')
   assert.equal(calls[3].url, 'http://localhost:8000/api/teams?archived=true')
   assert.equal(calls[4].url, 'http://localhost:8000/api/users?archived=true')
   assert.equal(calls[5].url, 'http://localhost:8000/api/tasks/task-1')
