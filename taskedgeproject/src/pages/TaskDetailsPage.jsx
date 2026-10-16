@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Archive, ArrowLeft, Pencil, Trash2 } from 'lucide-react'
 import { STATUSES, getTaskAttachmentDisplay, getTaskDetailFacts } from '../utils/taskLogic.jsx'
 import { getTaskCommentPermissions } from '../utils/taskPermissions.jsx'
 import { formatDate, formatNotificationDate, getCommentAuthor } from '../utils/display.jsx'
@@ -53,31 +54,58 @@ export function TaskDetailsPage({
 
   return (
     <section className="task-detail-page task-work-detail">
-      <header className="task-work-hero">
-        <button type="button" className="task-work-back" onClick={onBack}>Back to tasks</button>
-        <div className="task-work-hero-grid">
-          <div className="task-work-hero-copy">
-            <p className="eyebrow">{task.project}</p>
-            <h2>{task.title}</h2>
-            <p className="task-work-summary">{task.description || 'No description has been added to this task.'}</p>
-            <div className="task-work-badges">
-              <StatusBadge value={task.status} />
-              <PriorityBadge value={task.priority} />
-              <span className="task-work-date">Due {formatDate(task.dueDate)}</span>
-            </div>
+      <header className="project-detail-toolbar task-detail-toolbar">
+        <button type="button" className="project-back-button" onClick={onBack}>
+          <ArrowLeft size={17} aria-hidden="true" />
+          Back to tasks
+        </button>
+        <div className="project-detail-primary-actions">
+          {permissions.canManage && (
+            <>
+              <button type="button" className="project-action-button" onClick={() => onEditTask(task)}>
+                <Pencil size={16} aria-hidden="true" />
+                Edit task
+              </button>
+              <button type="button" className="project-action-button" onClick={() => onArchiveTask(task.id)}>
+                <Archive size={16} aria-hidden="true" />
+                Archive
+              </button>
+              {permissions.canDelete && onDeleteTask && (
+                <button type="button" className="project-action-button danger-action" onClick={() => onDeleteTask(task.id)}>
+                  <Trash2 size={16} aria-hidden="true" />
+                  Delete
+                </button>
+              )}
+            </>
+          )}
+          {permissions.canUpdateProgress && (
+            <button type="button" className="project-new-task-button" onClick={() => onOpenProgress(task)}>Update progress</button>
+          )}
+        </div>
+      </header>
+
+      <article className="panel task-detail-summary">
+        <div className="task-detail-summary-copy">
+          <p className="eyebrow">{task.project}</p>
+          <h2>{task.title}</h2>
+          <p className="task-work-summary">{task.description || 'No description has been added to this task.'}</p>
+          <div className="task-work-badges">
+            <StatusBadge value={task.status} />
+            <PriorityBadge value={task.priority} />
+            <span className="task-work-date">Due {formatDate(task.dueDate)}</span>
           </div>
-          <div className="task-work-assignee">
-            <span>Assigned to</span>
+        </div>
+        <div className="task-work-assignee">
+          <span>Assigned to</span>
+          <div>
+            <strong className="task-work-avatar">{assigneeInitials}</strong>
             <div>
-              <strong className="task-work-avatar">{assigneeInitials}</strong>
-              <div>
-                <b>{assigneeName}</b>
-                <small>{permissions.isAssignee ? 'You are responsible for this task' : 'Responsible assignee'}</small>
-              </div>
+              <b>{assigneeName}</b>
+              <small>{permissions.isAssignee ? 'You are responsible for this task' : 'Responsible assignee'}</small>
             </div>
           </div>
         </div>
-      </header>
+      </article>
 
       <div className="task-work-toolbar">
         <div className="task-work-status-control">
@@ -90,23 +118,9 @@ export function TaskDetailsPage({
             <StatusBadge value={task.status} />
           )}
         </div>
-        <div className="task-work-actions">
-          {permissions.canManage && (
-            <>
-              <button type="button" className="ghost-button compact" onClick={() => onEditTask(task)}>Edit task</button>
-              <button type="button" className="ghost-button compact" onClick={() => onArchiveTask(task.id)}>Archive</button>
-              {permissions.canDelete && onDeleteTask && (
-                <button type="button" className="ghost-button compact danger-action" onClick={() => onDeleteTask(task.id)}>Delete</button>
-              )}
-            </>
-          )}
-          {permissions.canUpdateProgress && (
-            <button type="button" className="primary-button compact" onClick={() => onOpenProgress(task)}>Update progress</button>
-          )}
-          {!permissions.canManage && !permissions.canUpdateProgress && (
-            <span className="task-read-only-badge">View only</span>
-          )}
-        </div>
+        {!permissions.canManage && !permissions.canUpdateProgress && (
+          <div className="task-work-actions"><span className="task-read-only-badge">View only</span></div>
+        )}
       </div>
 
       {taskMessage && <p className="form-message task-work-message">{taskMessage}</p>}

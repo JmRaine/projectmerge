@@ -82,3 +82,12 @@ test('project board cards expose the current TaskEdge information hierarchy', ()
   assert.match(pageSource, /<Archive[^>]*aria-hidden="true"/)
   assert.match(styles, /\.project-card-description\s*\{[^}]*-webkit-line-clamp:\s*2/s)
 })
+
+test('task details use the shared project toolbar and compact summary layout', () => {
+  const pageSource = readFileSync(new URL('pages/TaskDetailsPage.jsx', sourceRoot), 'utf8')
+
+  assert.match(pageSource, /className="project-detail-toolbar task-detail-toolbar"/)
+  assert.match(pageSource, /className="project-back-button"/)
+  assert.match(pageSource, /className="project-detail-primary-actions"/)
+  assert.match(pageSource, /className="panel task-detail-summary"/)
+})

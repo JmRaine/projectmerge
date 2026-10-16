@@ -4922,53 +4922,46 @@ textarea:focus {
   animation: task-detail-rise 360ms cubic-bezier(0.2, 0.72, 0.24, 1) both;
 }
 
-.task-work-detail > .task-work-toolbar { animation-delay: 45ms; }
-.task-work-detail > .task-work-message { animation-delay: 70ms; }
-.task-work-detail > .task-work-layout { animation-delay: 95ms; }
+.task-work-detail > .task-detail-summary { animation-delay: 45ms; }
+.task-work-detail > .task-work-toolbar { animation-delay: 70ms; }
+.task-work-detail > .task-work-message { animation-delay: 90ms; }
+.task-work-detail > .task-work-layout { animation-delay: 115ms; }
 
-.task-work-hero {
-  padding: 4px 0 24px;
-  border-bottom: 1px solid var(--line);
-}
-
-.task-work-back {
-  margin-bottom: 18px;
-  border: 0;
-  padding: 0;
-  color: var(--accent);
-  background: transparent;
-  font: inherit;
-  font-size: 0.84rem;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.task-work-back::before {
-  content: '\2190';
-  margin-right: 8px;
-}
-
-.task-work-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(230px, 280px);
-  gap: 34px;
+.task-detail-toolbar .project-detail-primary-actions {
   align-items: center;
 }
 
-.task-work-hero-copy h2 {
-  margin: 5px 0 10px;
+.task-detail-toolbar .project-action-button.danger-action {
+  color: #9f2a20;
+}
+
+.task-detail-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 280px);
+  gap: 24px;
+  align-items: center;
+  padding: 22px 24px;
+  border-top: 3px solid var(--accent);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.task-detail-summary-copy { min-width: 0; }
+
+.task-detail-summary h2 {
+  margin: 5px 0 8px;
   color: var(--text-strong);
-  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  font-size: 1.75rem;
   line-height: 1.12;
   letter-spacing: 0;
   overflow-wrap: anywhere;
 }
 
 .task-work-summary {
-  max-width: 820px;
+  max-width: 760px;
   margin: 0;
   color: var(--text-muted);
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 .task-work-badges {
@@ -4976,7 +4969,7 @@ textarea:focus {
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .task-work-date {
@@ -4990,7 +4983,7 @@ textarea:focus {
 }
 
 .task-work-assignee {
-  padding: 15px;
+  padding: 13px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: #ffffff;
@@ -5291,8 +5284,12 @@ textarea:focus {
 }
 
 @media (max-width: 720px) {
-  .task-work-hero-grid,
+  .task-detail-summary,
   .task-work-side { grid-template-columns: 1fr; }
+  .task-detail-toolbar .project-detail-primary-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  }
   .task-work-toolbar { align-items: flex-start; flex-direction: column; }
   .task-work-actions { width: 100%; }
   .task-work-layout { margin-inline: -8px; padding: 10px; }
@@ -5302,7 +5299,8 @@ textarea:focus {
 }
 
 @media (max-width: 480px) {
-  .task-work-hero-copy h2 { font-size: 1.55rem; }
+  .task-detail-summary { padding: 18px; }
+  .task-detail-summary h2 { font-size: 1.5rem; }
   .task-work-actions > button { flex: 1 1 calc(50% - 9px); }
   .task-work-information dl > div { grid-template-columns: 1fr; gap: 5px; }
   .task-work-information dd { text-align: left; }
